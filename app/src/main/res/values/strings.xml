@@ -2,4 +2,6 @@
     <string name="app_name">FakeAliExpress</string>
     <string name="Настройки">Настройки</string>
     <string name="Помощь">Помощь</string>
+    <string name="text">This is Activity Two</string>
+    <string name="Category">Category</string>
 </resources>
