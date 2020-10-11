@@ -1,4 +1,4 @@
-package com.example.fakealiexpress.Models;
+package com.example.fakealiexpress;
 
 public class CategoryListItem {
     private String label;

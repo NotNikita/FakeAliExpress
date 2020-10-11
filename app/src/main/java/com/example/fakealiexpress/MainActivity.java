@@ -1,20 +1,16 @@
-package com.example.fakealiexpress.Activity;
+package com.example.fakealiexpress;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fakealiexpress.Adapters.CategoryAdapter;
-import com.example.fakealiexpress.Models.CategoryListItem;
-import com.example.fakealiexpress.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +36,29 @@ public class MainActivity extends AppCompatActivity {
         // устанавливаем адаптер
         categList.setAdapter(stateAdapter);
         // слушатель выбора в списке
+
         AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
                 // получаем выбранный пункт
                 CategoryListItem selectedState = (CategoryListItem)parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Был выбран пункт " + selectedState.getLabel(),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Был выбран пункт " + selectedState.getLabel(), android.widget.Toast.LENGTH_LONG).show();
+
             }
         };
+
         categList.setOnItemClickListener(itemListener);
+
+        FloatingActionButton fab = findViewById(R.id.floating_action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setInitialData(){

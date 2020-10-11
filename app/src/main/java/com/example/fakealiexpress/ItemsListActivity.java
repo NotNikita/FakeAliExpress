@@ -1,4 +1,4 @@
-package com.example.fakealiexpress.Activity;
+package com.example.fakealiexpress;
 
 import androidx.appcompat.app.AppCompatActivity;
 

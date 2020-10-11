@@ -4,4 +4,5 @@
     <string name="Помощь">Помощь</string>
     <string name="text">This is Activity Two</string>
     <string name="Category">Category</string>
+    <string name="fab_backet">bucket</string>
 </resources>
