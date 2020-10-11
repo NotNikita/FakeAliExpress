@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="@string/Настройки"
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
-        android:orderInCategory="1"/>
-    <item
-        android:title="@string/Помощь"
-        android:id="@+id/actoin_help"
-        android:icon="@drawable/ic_help"
-        android:orderInCategory="2"/>
+        android:id="@+id/search"
+        android:icon="@drawable/ic_help_24"
+        android:title="@string/help"
+        android:contentDescription="@string/content_description_help"
+        app:showAsAction="ifRoom" />
 
 </menu>
