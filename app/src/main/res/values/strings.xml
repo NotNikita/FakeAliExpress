@@ -5,6 +5,10 @@
     <string name="text">This is Activity Two</string>
     <string name="Category">Category</string>
     <string name="fab_backet">bucket</string>
-    <string name="help">help_topbarr</string>
+    <string name="help">help_topbar</string>
     <string name="content_description_help">help_desc</string>
+    <string name="this_is_version_number">This is version number</string>
+    <string name="this_is_build_number">This is build number</string>
+    <string name="about">This is small about page</string>
+    <string name="copyright">Please reuse code in your project if you desire. You don\'t need to give attribution but if you can that would be appreciated. All I ask is that you don\'t sell this domestically and/or commercially for a profit or other form of gain.</string>
 </resources>

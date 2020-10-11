@@ -1,7 +1,9 @@
 package com.example.fakealiexpress;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
     }
 
     private void setInitialData(){
@@ -84,9 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        // this adds items to action bar
+        getMenuInflater().inflate(R.menu.top_app_bar, menu);
         return true;
     }
 
+
+    public boolean help_clicked(MenuItem item) {
+        startActivity(new Intent(this, AboutApp.class));
+        return super.onOptionsItemSelected(item);
+    }
 }
