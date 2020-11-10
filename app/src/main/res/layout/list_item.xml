@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding = "16dp" >
+    android:padding = "16dp">
+
 
     <ImageView
-        android:id="@+id/categImage"
+        android:id="@+id/itemImage"
         android:layout_marginEnd="16dp"
         android:layout_width="70dp"
         android:layout_height="50dp" />
@@ -17,12 +18,29 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/categName"
+            android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Category" />
+            android:text="@string/Item" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textAlignment="gravity"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/itemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"/>
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
 
 </LinearLayout>

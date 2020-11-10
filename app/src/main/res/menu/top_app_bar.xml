@@ -9,6 +9,7 @@
         android:icon="@drawable/ic_help_24"
         android:title="@string/help"
         app:showAsAction="always"
-        android:onClick="help_clicked"/>
+        android:onClick="help_clicked"
+        />
 
 </menu>
