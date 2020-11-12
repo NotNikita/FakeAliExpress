@@ -5,3 +5,6 @@ This application representing Java laby po PPO from Rozhkov.
 
 v. 1.0.0
 https://gofile.io/d/SsWiv4
+
+v. 1.1.0
+https://gofile.io/d/dJ2an2
