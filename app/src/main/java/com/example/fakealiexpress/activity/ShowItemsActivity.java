@@ -50,6 +50,7 @@ public class ShowItemsActivity extends Activity{
 
                 Intent intent = new Intent(ShowItemsActivity.this, ItemInfoActivity.class);
                 intent.putExtra("item_id", selectedItem.getId());
+                intent.putExtra("category_id", CATEGORY_ID);
                 startActivity(intent);
             }
         };

@@ -6,7 +6,7 @@ public class Item {
     private byte[] image;
     private int price;
     private int from_categ;
-    private String description = "Very good buy it please. I need to feed my 20 chinese childs. For more info: visit ItemInfoActivity.displayItemInfo()";
+    private String description = "Very good buy it please. I need to feed my 20 chinese childs. Any female born after 1993 can’t cook… all they know is mcdonald’s , charge they phone, twerk, be bisexual , eat hot chip & lie";
 
     public Item(int _id, String _name, byte[] _image, int _price, int _from_categ){
         this.id = _id;

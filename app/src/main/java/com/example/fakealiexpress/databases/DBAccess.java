@@ -1,5 +1,6 @@
 package com.example.fakealiexpress.databases;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -74,7 +75,6 @@ public class DBAccess {
             }
             while(c.moveToNext());
         }
-
         c.close();
         return items;
     }
@@ -98,5 +98,14 @@ public class DBAccess {
 
         c.close();
         return item;
+    }
+
+    public void putItemInBasket(int ITEM_ID){
+        // Создайте новую строку со значениями для вставки.
+        ContentValues newValues = new ContentValues();
+        // Задайте значения для каждой строки.
+        newValues.put("amount", 1);
+        newValues.put("id_item", ITEM_ID);
+        db.insert("BASKET_TABLE", null, newValues);
     }
 }
