@@ -8,3 +8,6 @@ https://gofile.io/d/SsWiv4
 
 v. 1.1.0
 https://gofile.io/d/dJ2an2
+
+v. 2.0.0
+https://gofile.io/d/dJ2an2
