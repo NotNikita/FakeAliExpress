@@ -11,3 +11,6 @@ https://gofile.io/d/dJ2an2
 
 v. 2.0.0
 https://gofile.io/d/dJ2an2
+
+v. 2.1.0
+https://gofile.io/d/dJ2an2
