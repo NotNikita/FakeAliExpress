@@ -10,13 +10,13 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fakealiexpress.activity.BasketActivity;
 import com.example.fakealiexpress.activity.ShowItemsActivity;
 import com.example.fakealiexpress.adapter.CategoryAdapter;
 import com.example.fakealiexpress.databases.DBAccess;
 import com.example.fakealiexpress.databases.DBHelper;
 import com.example.fakealiexpress.models.Category;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, BasketActivity.class);// MainActivity.this -> getApplicationContext()
+                startActivity(intent);
             }
         });
 

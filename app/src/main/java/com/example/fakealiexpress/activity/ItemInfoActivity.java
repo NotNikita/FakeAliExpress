@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.example.fakealiexpress.R;
 import com.example.fakealiexpress.databases.DBAccess;
 import com.example.fakealiexpress.databases.DBHelper;
+import com.example.fakealiexpress.fragments.ItemInfoFragment;
+import com.example.fakealiexpress.fragments.NumberPickerDialog;
 import com.example.fakealiexpress.models.Item;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ItemInfoActivity  extends AppCompatActivity {
+public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
     final static String TAG = "FakeAli";
 
     public static int ITEM_ID = 1;
@@ -28,6 +31,7 @@ public class ItemInfoActivity  extends AppCompatActivity {
     int indexOfCurrentItem;
     private List<Item> itemsInCategory = new ArrayList();
     ListIterator<Item> iterator;
+    int numberFromPicker = 1;
 
     private Button prevButton;
     private Button nextButton;
@@ -70,6 +74,8 @@ public class ItemInfoActivity  extends AppCompatActivity {
                 if (fragment != null){
                     if (iterator.hasPrevious()){
                         Item prevItem = iterator.previous();
+                        ITEM_ID = prevItem.getId();
+                        itemFromDB = prevItem; // test
                         fragment.updateValues(prevItem);
                     }
                     else
@@ -88,6 +94,8 @@ public class ItemInfoActivity  extends AppCompatActivity {
                 if (fragment != null){
                     if (iterator.hasNext()){
                         Item nextItem = iterator.next();
+                        ITEM_ID = nextItem.getId();
+                        itemFromDB = nextItem; // test
                         fragment.updateValues(nextItem);
                     }
                     else
@@ -101,17 +109,30 @@ public class ItemInfoActivity  extends AppCompatActivity {
         addToBucketButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //Amount picker
+                showNumberPicker(v);
                 //some database function
-                DBAccess dbAccess = DBAccess.getInstance(getApplicationContext());
-                dbAccess.open();
-                dbAccess.putItemInBasket(ITEM_ID);
-                dbAccess.close();
+
             }
         });
 
         dbHelper = new DBHelper(this);
     }
 
+    @Override
+    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+        numberFromPicker = numberPicker.getValue();
+        DBAccess dbAccess = DBAccess.getInstance(getApplicationContext());
+        dbAccess.open();
+        dbAccess.putItemInBasket(itemFromDB, numberFromPicker);
+        dbAccess.close();
+    }
+
+    public void showNumberPicker(View view){
+        NumberPickerDialog newFragment = new NumberPickerDialog();
+        newFragment.setValueChangeListener(this);
+        newFragment.show(getSupportFragmentManager(), "time picker");
+    }
 
     private void loadItemInfo() {
 

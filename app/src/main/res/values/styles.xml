@@ -64,5 +64,14 @@
     <style name="TextView.Primary.Bold">
         <item name="android:textAppearance">@style/Text.Primary.Bold</item>
     </style>
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:numberPickerStyle">@style/MyNumberPickerTheme</item>
+    </style>
+    <style name="MyNumberPickerTheme" parent="@android:style/Widget.Material.NumberPicker">
+        <item name="colorControlNormal">#01579b</item>
+        <item name="android:background">#64b5f6</item>
+    </style>
 
 </resources>

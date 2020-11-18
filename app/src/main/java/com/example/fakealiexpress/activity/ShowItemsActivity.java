@@ -13,7 +13,6 @@ import com.example.fakealiexpress.databases.DBAccess;
 import com.example.fakealiexpress.databases.DBHelper;
 import com.example.fakealiexpress.models.Item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +59,8 @@ public class ShowItemsActivity extends Activity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ShowItemsActivity.this, BasketActivity.class);// MainActivity.this -> getApplicationContext()
+                startActivity(intent);
             }
         });
 

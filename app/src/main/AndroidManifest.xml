@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.BasketActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".activity.ShowItemsActivity"
             android:parentActivityName=".MainActivity" />
         <activity

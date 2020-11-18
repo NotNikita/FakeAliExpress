@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.fakealiexpress.models.BasketModel;
 import com.example.fakealiexpress.models.Category;
 import com.example.fakealiexpress.models.Item;
 
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBAccess {
+    private static String TAG = "FakeAli";
+
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
     private static DBAccess instance;
@@ -79,6 +83,27 @@ public class DBAccess {
         return items;
     }
 
+    public List<BasketModel> getItemsFromBacket(){
+        List<BasketModel> items = new ArrayList();
+        c = db.rawQuery("SELECT * FROM BASKET_TABLE;", new String[] {});
+        if(c.moveToFirst()){
+            do{
+                items.add(new BasketModel(
+                        c.getInt(0),    //_id
+                        c.getString(1), //name
+                        c.getInt(2),    //amount
+                        c.getBlob(3),   //image
+                        c.getInt(4),    //price
+                        c.getInt(5)     //id_item
+                ));
+
+            }
+            while(c.moveToNext());
+        }
+        c.close();
+        return items;
+    }
+
     public Item getItem(int ITEM_ID) {
         Item item = null;
         c = db.rawQuery("SELECT * FROM ITEM_TABLE WHERE _id = "+ ITEM_ID +';', new String[] {});
@@ -100,12 +125,44 @@ public class DBAccess {
         return item;
     }
 
-    public void putItemInBasket(int ITEM_ID){
-        // Создайте новую строку со значениями для вставки.
-        ContentValues newValues = new ContentValues();
-        // Задайте значения для каждой строки.
-        newValues.put("amount", 1);
-        newValues.put("id_item", ITEM_ID);
-        db.insert("BASKET_TABLE", null, newValues);
+    public void putItemInBasket(Item item, int amount){
+        //узнаем есть ли уже элемент в корзине
+        c = db.rawQuery("SELECT COUNT(*) FROM BASKET_TABLE WHERE id_item = "+ item.getId() +";", new String[] {});
+        int itemExist = 0;
+        if(c.moveToFirst()){
+            do{
+                itemExist = c.getInt(0);
+            }
+            while(c.moveToNext());
+        }
+        if (itemExist == 0) // Значит такого предмета еще нет в таблице
+        {
+            Log.d(TAG, "Basket was read successfully. There isnt any items with id=" + item.getId());
+            ContentValues newValues = new ContentValues();
+            // Задайте значения для каждой строки.
+            newValues.put("name", item.getName());
+            newValues.put("amount", amount);
+            newValues.put("image", item.getImage());
+            newValues.put("price", item.getPrice());
+            newValues.put("id_item", item.getId());
+            db.insert("BASKET_TABLE", null, newValues);
+        }
+        else if (itemExist == 1) //товар уже находится в корзине
+        {
+            Log.d(TAG, "Basket was read successfully. There is some items with id=" + item.getId());
+            db.execSQL("UPDATE BASKET_TABLE SET amount  = " + amount + " where id_item = "+ item.getId() +";");
+        }
+        Log.d(TAG, "Basket was read successfully. Item with id=" + item.getId() + " was putted");
+    }
+
+    public void putItemInBasket(BasketModel item){
+        int newAmount = item.getAmount() + 1;
+        db.execSQL("UPDATE BASKET_TABLE SET amount  = " + newAmount + " where id_item = "+ item.getId_item() +";");
+        Log.d(TAG, "Basket was read successfully. Item with id=" + item.getId() + " was putted");
+    }
+
+    public void removeItemFromBasket(int id) {
+        db.execSQL("DELETE FROM BASKET_TABLE WHERE _id = " + id + ";");
+        Log.d(TAG, "Item with id = " + id + " was removed from basket");
     }
 }
