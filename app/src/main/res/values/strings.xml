@@ -29,4 +29,8 @@
     <string name="amount">Кол-во</string>
     <string name="minus">delete</string>
     <string name="BasketTip">Для удаления товара из корзины - просто свайпните его влево!</string>
+    <string name="fab_add_note">Добавить</string>
+    <string name="image_url">image url</string>
+    <string name="add_item">Добавить предмет</string>
+    <string name="price_list">PRICE LIST</string>
 </resources>

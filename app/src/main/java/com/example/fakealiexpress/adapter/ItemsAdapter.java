@@ -10,18 +10,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.fakealiexpress.R;
 import com.example.fakealiexpress.models.Item;
 
 import java.util.List;
 
 
-public class ItemsAdapter2 extends ArrayAdapter<Item> {
+public class ItemsAdapter extends ArrayAdapter<Item> {
     private LayoutInflater inflater;
     private int layout;
     private List<Item> itemList;
 
-    public ItemsAdapter2(Context context, int resource, List<Item> itemList) {
+    public ItemsAdapter(Context context, int resource, List<Item> itemList) {
         super(context, resource, itemList);
         this.itemList = itemList;
         this.layout = resource;
@@ -32,14 +34,14 @@ public class ItemsAdapter2 extends ArrayAdapter<Item> {
 
         Bitmap bitmap;
 
-        ItemsAdapter2.ViewHolder viewHolder;
+        ItemsAdapter.ViewHolder viewHolder;
         if(convertView==null){
             convertView = inflater.inflate(this.layout, parent, false);
-            viewHolder = new ItemsAdapter2.ViewHolder(convertView);
+            viewHolder = new ItemsAdapter.ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }
         else{
-            viewHolder = (ItemsAdapter2.ViewHolder) convertView.getTag();
+            viewHolder = (ItemsAdapter.ViewHolder) convertView.getTag();
         }
         Item state = itemList.get(position);
 
@@ -47,6 +49,10 @@ public class ItemsAdapter2 extends ArrayAdapter<Item> {
         viewHolder.imageView.setImageBitmap(bitmap);
         viewHolder.nameTextView.setText(state.getName());
         viewHolder.priceTextView.setText(String.valueOf(state.getPrice()) + "$");
+        if (state.isViewed()) //Если элемент уже просмотрен
+            viewHolder.nameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorItemViewed));
+        else
+            viewHolder.nameTextView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
 
         return convertView;
     }

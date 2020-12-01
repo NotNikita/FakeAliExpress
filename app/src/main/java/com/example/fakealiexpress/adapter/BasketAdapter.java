@@ -3,6 +3,7 @@ package com.example.fakealiexpress.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,8 @@ public class BasketAdapter extends ArrayAdapter<BasketModel>{
                 dbAccess.open();
                 dbAccess.removeItemFromBasket(itemList.get(position).getId());
                 dbAccess.close();
+                final MediaPlayer mediaPlayer2 = MediaPlayer.create(getContext(), R.raw.anothervictim);
+                mediaPlayer2.start();
                 itemList.remove(position);
                 BasketAdapter.this.notifyDataSetChanged();
             }

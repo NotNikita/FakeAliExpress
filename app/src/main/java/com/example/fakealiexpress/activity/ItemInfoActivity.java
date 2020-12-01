@@ -1,5 +1,6 @@
 package com.example.fakealiexpress.activity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,12 +44,15 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         super.onCreate(savedInstanceState);
         ITEM_ID = getIntent().getExtras().getInt("item_id");
         CATEGORY_ID = getIntent().getExtras().getInt("category_id");
-        Log.d(TAG, "OnCreate, before setContentView");
+        Log.d(TAG, "OnCreate, before setContentView : ItemInfoActivity");
         setContentView(R.layout.activity_item_info);
-        Log.d(TAG, "OnCreate, after setContentView");
         prevButton = findViewById(R.id.btnPrevFragment);
         nextButton = findViewById(R.id.btnNextFragment);
         addToBucketButton = findViewById(R.id.btnAddToBucket);
+
+        //Sound
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.hitmarker);
+        final MediaPlayer mediaPlayer2 = MediaPlayer.create(this, R.raw.anothervictim);
 
         loadItemInfo();
         setItemsFromDB();
@@ -69,8 +73,10 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         prevButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Log.d(TAG, "ItemInfoActivity: button prev clicked");
                 //some database function
                 ItemInfoFragment fragment = (ItemInfoFragment) getSupportFragmentManager().findFragmentByTag("fragment");
+                mediaPlayer.start();
                 if (fragment != null){
                     if (iterator.hasPrevious()){
                         Item prevItem = iterator.previous();
@@ -89,8 +95,10 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Log.d(TAG, "ItemInfoActivity: button next clicked");
                 //some database function
                 ItemInfoFragment fragment = (ItemInfoFragment) getSupportFragmentManager().findFragmentByTag("fragment");
+                mediaPlayer.start();
                 if (fragment != null){
                     if (iterator.hasNext()){
                         Item nextItem = iterator.next();
@@ -109,7 +117,9 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         addToBucketButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Log.d(TAG, "ItemInfoActivity: button buy clicked");
                 //Amount picker
+                mediaPlayer2.start();
                 showNumberPicker(v);
                 //some database function
 
@@ -121,6 +131,7 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
 
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+        Log.d(TAG, "ItemInfoActivity: changing color of "+ itemFromDB.getName());
         numberFromPicker = numberPicker.getValue();
         DBAccess dbAccess = DBAccess.getInstance(getApplicationContext());
         dbAccess.open();
@@ -139,8 +150,10 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         DBAccess dbAccess = DBAccess.getInstance(getApplicationContext());
         dbAccess.open();
         itemFromDB = dbAccess.getItem(ITEM_ID);
+        //changing it color
+        dbAccess.itemWasViewedChangeColor(ITEM_ID);
         dbAccess.close();
-        Log.d(TAG, "ItemInfoActivity.loadItemInfo : itemFromDb successfully");
+        Log.d(TAG, "ItemInfoActivity : items loaded successfully");
     }
 
     private void setItemsFromDB(){
@@ -159,7 +172,7 @@ public class ItemInfoActivity  extends AppCompatActivity implements NumberPicker
         //setting iterator on position of current element
         iterator = itemsInCategory.listIterator(indexOfCurrentItem);
         dbAccess.close();
-        Log.d(TAG, "ItemInfoActivity.setItemsFromDB : itemsInCategory successfully");
+        Log.d(TAG, "ItemInfoActivity : itemsInCategory successfully");
     }
 
 }

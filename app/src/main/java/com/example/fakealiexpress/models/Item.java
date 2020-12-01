@@ -6,14 +6,18 @@ public class Item {
     private byte[] image;
     private int price;
     private int from_categ;
+    private boolean isViewed; //Была ли просмотрена вещь
     private String description = "Very good buy it please. I need to feed my 20 chinese childs. Any female born after 1993 can’t cook… all they know is mcdonald’s , charge they phone, twerk, be bisexual , eat hot chip & lie";
 
-    public Item(int _id, String _name, byte[] _image, int _price, int _from_categ){
+    public Item(){}
+
+    public Item(int _id, String _name, byte[] _image, int _price, int _from_categ, boolean _isViewed){
         this.id = _id;
         this.image = _image;
         this.name = _name;
         this.price = _price;
         this.from_categ = _from_categ;
+        this.isViewed = _isViewed;
     }
 
     public Item(String _name, byte[] _image, int _price, int _from_categ){
@@ -21,6 +25,7 @@ public class Item {
         this.name = _name;
         this.price = _price;
         this.from_categ = _from_categ;
+        this.isViewed = false;
     }
 
     public String getName(){
@@ -42,6 +47,8 @@ public class Item {
     public byte[] getImage() {
         return image;
     }
+
+    public void setImage(byte[] _image) {this.image = _image;}
 
     public int getPrice() {
         return price;
@@ -65,5 +72,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isViewed() {
+        return isViewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        isViewed = viewed;
     }
 }

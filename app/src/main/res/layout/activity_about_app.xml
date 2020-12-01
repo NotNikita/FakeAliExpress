@@ -2,16 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fakealiexpress.AboutApp">
+    tools:context="com.example.fakealiexpress.activity.AboutAppActivity">
 
     <TextView
         android:id="@+id/about"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/about"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:textSize="50sp"/>
+    <Button
+        android:id="@+id/aboutAppBtn"
+        android:layout_height="140dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="400dp"
+        android:text="@string/price_list"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="30sp"
+        android:background="@drawable/cockroach"
+        android:onClick="openPriceList"
+        />
 
 
 </RelativeLayout>

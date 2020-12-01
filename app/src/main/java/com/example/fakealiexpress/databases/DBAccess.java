@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.fakealiexpress.models.BasketModel;
 import com.example.fakealiexpress.models.Category;
 import com.example.fakealiexpress.models.Item;
+import com.example.fakealiexpress.models.ItemFullModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class DBAccess {
     }
 
     public List<Category> getCategories(){
+        Log.d(TAG, "DataBase : get Categories from DB");
         List<Category> categories = new ArrayList<>();
         c = db.rawQuery("SELECT * FROM CATEG_TABLE;", new String[]{});
 
@@ -64,6 +66,7 @@ public class DBAccess {
     }
 
     public List<Item> getItems(int CATEGORY_ID) {
+        Log.d(TAG, "DataBase : get Items from DB");
         List<Item> items = new ArrayList();
         c = db.rawQuery("SELECT * FROM ITEM_TABLE WHERE id_category = " + CATEGORY_ID + ';', new String[] {});
         if(c.moveToFirst()){
@@ -72,8 +75,9 @@ public class DBAccess {
                         c.getInt(0),    //id
                         c.getString(1), //name
                         c.getBlob(2),   //image
-                        c.getInt(3), //price
-                        c.getInt(4)     //id_category
+                        c.getInt(3),    //price
+                        c.getInt(4),     //id_category
+                        (c.getInt( 5) == 1) //isViewed
                 ));
 
             }
@@ -84,6 +88,7 @@ public class DBAccess {
     }
 
     public List<BasketModel> getItemsFromBacket(){
+        Log.d(TAG, "DataBase : get Basket items from DB");
         List<BasketModel> items = new ArrayList();
         c = db.rawQuery("SELECT * FROM BASKET_TABLE;", new String[] {});
         if(c.moveToFirst()){
@@ -105,6 +110,7 @@ public class DBAccess {
     }
 
     public Item getItem(int ITEM_ID) {
+        Log.d(TAG, "DataBase : get Item with id="+ITEM_ID+" from DB");
         Item item = null;
         c = db.rawQuery("SELECT * FROM ITEM_TABLE WHERE _id = "+ ITEM_ID +';', new String[] {});
         if(c.moveToFirst()){
@@ -114,7 +120,8 @@ public class DBAccess {
                         c.getString(1),
                         c.getBlob(2),
                         c.getInt(3),
-                        c.getInt(4)
+                        c.getInt(4),
+                        (c.getInt( 5) == 1) //isViewed
                 );
 
             }
@@ -137,7 +144,7 @@ public class DBAccess {
         }
         if (itemExist == 0) // Значит такого предмета еще нет в таблице
         {
-            Log.d(TAG, "Basket was read successfully. There isnt any items with id=" + item.getId());
+            Log.d(TAG, "DataBase : There isnt any items with id=" + item.getId());
             ContentValues newValues = new ContentValues();
             // Задайте значения для каждой строки.
             newValues.put("name", item.getName());
@@ -164,5 +171,40 @@ public class DBAccess {
     public void removeItemFromBasket(int id) {
         db.execSQL("DELETE FROM BASKET_TABLE WHERE _id = " + id + ";");
         Log.d(TAG, "Item with id = " + id + " was removed from basket");
+    }
+
+    public void itemWasViewedChangeColor(int ITEM_ID) {
+        db.execSQL("UPDATE ITEM_TABLE SET isViewed  = " + 1 + " where _id = "+ ITEM_ID +";");
+        Log.d(TAG, "Color was set to RED. Item with id=" + ITEM_ID);
+    }
+
+    public void setItemsColorsDefault() {
+        db.execSQL("UPDATE ITEM_TABLE SET isViewed  = " + 0 + " where isViewed = "+ 1 +";");
+        Log.d(TAG, "All colors was set to default BLACK.");
+    }
+
+    public List<ItemFullModel> getCategoryPlusItems(){
+        Log.d(TAG, "DataBase : getting PriceList from DB");
+        List<ItemFullModel> items = new ArrayList();
+        ItemFullModel item = null;
+        c = db.rawQuery("SELECT name, image, price, categ_name\n" +
+                "FROM ITEM_TABLE\n" +
+                "    [INNER] JOIN CATEG_TABLE\n" +
+                "    ON CATEG_TABLE._id = id_category;", new String[] {});
+        if(c.moveToFirst()){
+            do{
+                items.add( new ItemFullModel(
+                        c.getString(0),
+                        c.getBlob(1),
+                        c.getInt(2),
+                        c.getString(3)
+                ));
+
+            }
+            while(c.moveToNext());
+        }
+
+        c.close();
+        return items;
     }
 }
